@@ -4,8 +4,7 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = "dev-only-change-me"
-DEBUG = True
-ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
+DEBUG = False
 
 INSTALLED_APPS = [
     "django.contrib.admin",
