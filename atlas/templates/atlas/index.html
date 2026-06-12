@@ -1,0 +1,71 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{% if atlas %}{{ atlas.title }}{% else %}Human Atlas{% endif %}</title>
+<link rel="stylesheet" href="{% static 'atlas/css/atlas.css' %}">
+</head>
+<body>
+
+<canvas id="stage"></canvas>
+
+<header id="masthead">
+  <h1 onclick="goAtlas()">Human <span>Atlas</span></h1>
+  <div id="crumb"></div>
+</header>
+
+<div id="era-badge">
+  <div class="era-years">{% if atlas %}{{ atlas.start_year }} – {{ atlas.end_year }}{% endif %}</div>
+  <div class="era-sub">{% if atlas %}{{ atlas.subtitle }}{% endif %}</div>
+</div>
+
+<div id="hint">Drift across the landscape · scroll to zoom · choose an island to enter its story</div>
+
+<div id="topic-actions">
+  <button class="btn" onclick="goAtlas()">← Back to Atlas</button>
+  <button class="btn primary" id="play-story-btn">▶ &nbsp;Play Story</button>
+</div>
+
+<div id="tip"><div class="t-title"></div><div class="t-sub"></div></div>
+
+<div id="veil" onclick="closePanels()"></div>
+
+<aside class="panel" id="person-panel">
+  <div class="panel-close">
+    <span class="panel-kicker">Biography · Timeline</span>
+    <button class="x" onclick="closePanels()">Close ✕</button>
+  </div>
+  <div class="panel-body" id="person-body"></div>
+</aside>
+
+<aside class="panel" id="event-panel">
+  <div class="panel-close">
+    <span class="panel-kicker">Moment in Time</span>
+    <button class="x" onclick="closePanels()">Close ✕</button>
+  </div>
+  <div class="panel-body" id="event-body"></div>
+</aside>
+
+<div id="story">
+  <div id="story-top">
+    <span id="story-kicker"></span>
+    <button id="story-exit" onclick="exitStory()">Exit Story ✕</button>
+  </div>
+  <div id="story-stage"></div>
+  <div id="story-nav">
+    <button class="snav-btn" id="snav-prev" onclick="storyStep(-1)">←</button>
+    <div id="story-progress"></div>
+    <button class="snav-btn" id="snav-next" onclick="storyStep(1)">→</button>
+  </div>
+</div>
+
+<script>
+// Inject Django data
+window.ATLAS_DATA_URL = '{% if atlas %}{% url "atlas:atlas_data" atlas.slug %}{% endif %}';
+window.GRAPH_DATA_URL = '{% if atlas %}{% url "atlas:graph_data" atlas.slug %}{% endif %}';
+</script>
+<script type="module" src="{% static 'atlas/js/atlas.js' %}"></script>
+</body>
+</html>
