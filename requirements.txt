@@ -1,3 +1,6 @@
+pip>=24.0
+setuptools>=69.0
+wheel>=0.42.0
 asgiref==3.11.1
 Django==6.0.5
 et_xmlfile==2.0.0
